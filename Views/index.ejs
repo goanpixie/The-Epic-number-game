@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type ="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type ="text/javascript">
+        $(document).ready(function (){
+            // this triggers the connection event in our server!
+            var socket = io.connect();
+            $('.btn').click(function (){
+              socket.emit("button_clicked");
+              });
+
+            $('.reset').click(function (){
+                socket.emit("clear_counter");
+                });
+
+              socket.on('reset',function(data){
+                $(".statement").html("The counter is now at: "  + data.response);
+              });
+
+              socket.on('welcome',function(data){
+                $(".statement").html("The counter is now at: "  + data.response);
+              });
+
+              socket.on('add_count', function (data){
+                $(".statement").html("The counter is now at: "  + data.response);
+              });
+
+            // we'll write all the socket stuff after the above line!
+        })
+    </script>
+  </head>
+  <body>
+    <div class="statement">
+
+    </div>
+    <button class="btn" >I am a button</button>
+    <button class="reset" >Reset</button>
+
+
+  </body>
+</html>
